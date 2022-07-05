@@ -24,8 +24,8 @@ fmt_path <- function(
   new_path <- gsub("\"", '', old_path)
   if (fwd_slash) {
     new_path <- chartr("\\", "/", new_path)
-    new_path <- gsub("(/)\\1+", "\\1", new_path)
   }
+  new_path <- gsub("(/)\\1+", "\\1", new_path)
   if (write) {
     writeLines(text = gsub("\\", "\\\\", new_path, fixed = TRUE), con = "clipboard", sep = "")
     #writeClipboard(gsub("\\", "\\\\", new_path, fixed = TRUE))
