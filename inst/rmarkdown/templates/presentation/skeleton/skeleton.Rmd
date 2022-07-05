@@ -1,0 +1,78 @@
+---
+title: "Presentation"
+author: 
+  - "Andrej Sokolič"
+  - ""
+output:
+  xaringan::moon_reader:
+    self_contained: false
+    css: xaringan_themer.css
+    nature:
+      slideNumberFormat: "%current%"
+      highlightStyle: github
+      highlightLines: true
+      ratio: 16:9
+      countIncrementalSlides: true
+params: 
+  d: !r Sys.Date()
+  eval: TRUE
+  fig_align: center
+  fig_asp: 0.618
+  fig_out_width: 70%
+  fig_pos: asis
+  fig_width: 6
+  locale: slovenian
+  print_code: FALSE
+  print_msgs: FALSE
+  print_txt_results: asis
+  print_session_info: FALSE
+  print_warnings : FALSE
+  subtitle: FALSE
+---
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = params$print_code,
+  eval = params$eval, 
+  fig.align = params$fig_align,
+  fig.asp = params$fig_asp,
+  fig.show = params$fig_pos, 
+  fig.width = params$fig_width,
+  message = params$print_msgs,
+  out.width = params$fig_out_width,
+  results = params$print_txt_results, 
+  warning = params$print_warnings
+)
+
+Sys.setlocale("LC_ALL", params$locale)
+
+presentation_date <- ifelse(
+  grepl("eng", params$locale, ignore.case = TRUE), 
+  params$d, 
+  format(params$d, format = "%d.%m.%Y")
+)
+
+presentation_subtitle <- ifelse(
+  params$subtitle != FALSE,
+  params$subtitle,
+  ""
+)
+```
+
+
+```{r libraries, echo = FALSE}
+library(here)
+```
+
+`r ifelse(params$print_session_info, "**Session Information:**\n", "")`
+
+```{r sess_info, results='markup'}
+if(params$print_session_info) sessioninfo::session_info()
+```
+
+
+---
+date: `r presentation_date`
+subtitle: `r presentation_subtitle`
+---

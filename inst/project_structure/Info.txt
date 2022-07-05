@@ -1,0 +1,19 @@
+000_references contains references and methodology.
+
+00_data contains raw and processed data files.
+
+01_scripts contains functions and code. 
+	000_run_all Runs scripts  reports.
+	001_import Used if data has to be imported manually from various sources	 		
+	002_tidy Contains data cleaning. 
+	003_transform Data transformations.
+	004_visualize Explore and visualize data. Find patterns, problems, etc. Further cleaning can be done in this step if necessary.
+	005_model Modeling.
+
+02_reports contains report documents - Rmarkdown files and presentations.
+
+03_outputs contains outputs - data, images, tables,...
+
+98_test contains files to test the methods used.
+
+99_old contains outdated files and similiar.

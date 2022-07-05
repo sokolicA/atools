@@ -1,0 +1,4 @@
+name: Report template
+description: >
+   A template used to generate reports.
+create_dir: FALSE
