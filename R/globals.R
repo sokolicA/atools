@@ -1,1 +1,1 @@
-utils::globalVariables("pars")
+utils::globalVariables(c("pars"))
