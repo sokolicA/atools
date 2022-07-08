@@ -1,8 +1,9 @@
-#' Remove whitespace from character columns
+#' Remove whitespace from character vectors/columns.
 #'
-#' @param dt A data.table object
+#' @param x Any of the following: A character vector, a data.frame or a data.table.
+#' @param ... Add
 #'
-#' @return Nothing. Removal is done by assignment.
+#' @return Nothing, if x is a data.table and same object as x without white space in character columns otherwise.
 #' @export
 #'
 #' @examples
@@ -11,8 +12,20 @@
 #' remove_ws(x) # Nothing is returned.
 #' x$test
 #' }
-remove_ws <- function(dt) {
-  if(!data.table::is.data.table(dt)) stop("Works for data.table objects only.")
-  cols <- colnames(dt)[sapply(dt, is.character)]
-  dt[, (cols) := lapply(.SD, trimws), .SDcols = cols]
+remove_ws <- function(...) {
+  UseMethod("remove_ws")
+}
+remove_ws.data.table <- function(x) {
+  cols <- colnames(x)[sapply(x, is.character)]
+  x[, (cols) := lapply(.SD, trimws), .SDcols = cols]
+}
+
+remove_ws.data.frame <- function(x) {
+  cols <- colnames(x)[sapply(x, is.character)]
+  x[cols] <- apply(x[cols], 2, trimws)
+  x
+}
+
+remove_ws.character <- function(x) {
+  trimws(x)
 }

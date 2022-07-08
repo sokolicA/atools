@@ -2,18 +2,20 @@
 % Please edit documentation in R/remove_ws.R
 \name{remove_ws}
 \alias{remove_ws}
-\title{Remove whitespace from character columns}
+\title{Remove whitespace from character vectors/columns.}
 \usage{
-remove_ws(dt)
+remove_ws(...)
 }
 \arguments{
-\item{dt}{A data.table object}
+\item{...}{Add}
+
+\item{x}{Any of the following: A character vector, a data.frame or a data.table.}
 }
 \value{
-Nothing. Removal is done by assignment.
+Nothing, if x is a data.table and same object as x without white space in character columns otherwise.
 }
 \description{
-Remove whitespace from character columns
+Remove whitespace from character vectors/columns.
 }
 \examples{
 \dontrun{
