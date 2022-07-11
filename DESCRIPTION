@@ -14,7 +14,6 @@ Imports:
     data.table,
     ggplot2,
     magrittr,
-    readr,
     rstudioapi,
     utils
 Depends: 
