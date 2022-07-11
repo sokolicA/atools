@@ -9,7 +9,7 @@
 #' \dontrun{
 #'  read_SQL("~file.sql")
 #' }
-read_sql <- function(path) {
+read_sql <- function(path, rm_comments = FALSE) {
   # qry <- readr::read_file(path)
   # #remove comments \* comment *\
   # qry <- gsub("/\\*.*?\\*/", "", qry)
@@ -21,7 +21,7 @@ read_sql <- function(path) {
   con = file(path, "r")
   sql <- ""
 
-  while (TRUE){
+  while (TRUE) {
     line <- readLines(con, n = 1)
 
     if ( length(line) == 0 ){
@@ -30,13 +30,23 @@ read_sql <- function(path) {
 
     line <- gsub("\\t", " ", line)
 
-    if(grepl("--",line) == TRUE){
-      line <- paste(sub("--","/*",line),"*/")
+    if (grepl("--", line) == TRUE) {
+      line <- paste(sub("--", "/*",line),"*/")
     }
+    sql <- gsub("( *?)$", "", sql)
 
-    sql <- paste(sql, line)
+    if (nchar(line) > 0) {
+      sql <- paste(sql, line, "\r\n")
+    }
+  }
+  close(con)
+
+  if (rm_comments) {
+    sql <- gsub("/\\*.*?\\*/", "", sql)
   }
 
-  close(con)
+  sql <- gsub("^(.*?)start query\\*/", "", sql)
+  sql <- gsub("/\\*end query(.*?)$", "", sql)
+
   sql
 }
