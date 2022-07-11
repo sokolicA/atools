@@ -7,7 +7,7 @@
 set_wd(..., file_loc = FALSE)
 }
 \arguments{
-\item{...}{String containing directory}
+\item{...}{String containing directory.}
 
 \item{file_loc}{Whether to set working directory to document path.}
 }

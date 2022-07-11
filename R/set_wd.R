@@ -1,6 +1,6 @@
 #' Set working directory
 #'
-#' @param ... String containing directory
+#' @param ... String containing directory.
 #' @param file_loc Whether to set working directory to document path.
 #'
 #' @return Nothing.
@@ -14,4 +14,5 @@ set_wd <- function(..., file_loc = FALSE) {
   } else {
     setwd(...)
   }
+  cat(paste0("New working directory: ", getwd()))
 }
