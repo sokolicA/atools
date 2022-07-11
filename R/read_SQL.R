@@ -47,7 +47,10 @@ read_sql <- function(path, rm_comments = FALSE) {
 
   sql <- gsub("^(.*?)start query\\*/", "", sql)
   sql <- gsub("/\\*end query(.*?)$", "", sql)
+<<<<<<< HEAD
 
+=======
+>>>>>>> cdceb9cde681059a3ddec3c3084c1709b47bd42f
 
   sql
 }
