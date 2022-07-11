@@ -20,6 +20,8 @@
 bind_rows <- function(...) {
   UseMethod("bind_rows")
 }
+
+#' @export
 bind_rows.data.table <- function(
     dt1,
     dt2,
@@ -35,6 +37,7 @@ bind_rows.data.table <- function(
   )
 }
 
+#' @export
 bind_rows.data.frame <- function(
     dt1,
     dt2
