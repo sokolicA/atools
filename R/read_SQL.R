@@ -11,5 +11,13 @@
 #'  read_SQL("~file.sql")
 #' }
 read_SQL <- function(path) {
-  readr::read_file(path)
+  qry <- readr::read_file(path)
+  #remove comments \* comment *\
+  qry <- gsub("/\\*.*?\\*/", "", qry)
+  # remove the new line at the beggining
+  qry <- gsub("^(\\r\n)*", "", qry)
+  # remove everything after ;
+  qry <- gsub("(;.*)$", "", qry)
+
+  qry
 }
