@@ -1,6 +1,6 @@
 #' Read a SQL file into a string in R.
 #'
-#' @param path Path to the .sql file.
+#' @param path Path to the .sql file. If the sql file includes multiple queries or has other text before and after the query, mark the start of the query with "-- start query" and the end of the query with "-- end query".
 #'
 #' @return A string containing the sql code.
 #' @export
@@ -33,7 +33,7 @@ read_sql <- function(path, rm_comments = FALSE) {
     if (grepl("--", line) == TRUE) {
       line <- paste(sub("--", "/*",line),"*/")
     }
-    sql <- gsub("( *?)$", "", sql)
+    line <- gsub("( *?)$", "", line)
 
     if (nchar(line) > 0) {
       sql <- paste(sql, line, "\r\n")
