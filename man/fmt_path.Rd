@@ -4,12 +4,12 @@
 \alias{fmt_path}
 \title{Format path to be readable by R}
 \usage{
-fmt_path(path = "clipboard", fwd_slash = FALSE, write = TRUE)
+fmt_path(path = "clipboard", unix = FALSE, write = TRUE)
 }
 \arguments{
 \item{path}{Path. Can be quoted or unquoted.}
 
-\item{fwd_slash}{Whether to return single forward slashes. Defaults to FALSE, which returns double backslashes.}
+\item{unix}{Whether to return a Unix systems based path using single forward slashes. Defaults to FALSE, which returns double backslashes.}
 
 \item{write}{Whether to write the new path to clipboard.}
 }
@@ -17,9 +17,17 @@ fmt_path(path = "clipboard", fwd_slash = FALSE, write = TRUE)
 A string containing the new path.
 }
 \description{
-Format path to be readable by R
+Useful when copying paths (Copy as path)
+}
+\details{
+By the UNC (Universal Naming Convention) paths starting with "\\\\" (also "//") refer to network , shared locations or directories. (Windows)
+Windows uses backslash ("\") as a folder separator. The backslash ("\") is often (in many programming languages) also an escaping character, therefore a double backslash is necessary to print a single backslash at run time.
+Unix based systems use a forward slash ("/") as a folder separator. R (and many others, such as Python) accept both as folder separators ("\\\\" for a single and "\\\\\\\\" for a double backslash).
 }
 \examples{
 x <- "C:\ example"
 fmt_path(x, write = FALSE)
+}
+\references{
+\href{https://en.wikipedia.org/wiki/Path_(computing)}{Wikipedia Path (computing)}
 }
