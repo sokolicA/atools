@@ -1,6 +1,7 @@
 #' Read a SQL file into a string in R.
 #'
 #' @param path Path to the .sql file. If the sql file includes multiple queries or has other text before and after the query, mark the start of the query with "-- start query" and the end of the query with "-- end query".
+#' @param rm_comments Whether to remove comments in sql code.
 #'
 #' @return A string containing the sql code.
 #' @export
