@@ -8,25 +8,12 @@ bind_rows(...)
 }
 \arguments{
 \item{...}{Add}
-
-\item{dt1}{Main data.table object.}
-
-\item{dt2}{Secondary data.table object to be appended.}
-
-\item{fill}{Whether to fill missing values with NAs. Defaults to FALSE. When TRUE, use_names is set to TRUE.}
-
-\item{use_names}{Whether to bind by matching column names. Defaults to TRUE. If FALSE, matching is done by position.}
-}
-\value{
-An unkeyed data.table containing a concatenation of all the items passed in.
 }
 \description{
 Combine two objects by rows.
 }
 \examples{
 \dontrun{
-x <- data.table(a = 1:2, b = c("A", "B"))
-y <- data.table(a = 3:4, b = c("C", "D"))
-bind_rows(x, y)
+bind_rows(...)
 }
 }

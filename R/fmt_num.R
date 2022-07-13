@@ -10,7 +10,6 @@
 #' @examples
 #' fmt_num(50000.54, decimal_mark = ",")
 #' fmt_num("50000.54", decimal_mark = ",")
-#' fmt_num("50a4", decimal_mark = ",")
 fmt_num <- function(
     x,
     decimal_mark = ",",

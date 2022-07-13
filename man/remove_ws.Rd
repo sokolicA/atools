@@ -8,11 +8,9 @@ remove_ws(...)
 }
 \arguments{
 \item{...}{Add}
-
-\item{x}{Any of the following: A character vector, a data.frame or a data.table.}
 }
 \value{
-Nothing, if x is a data.table and same object as x without white space in character columns otherwise.
+The form of the value returned by summary depends on the class of its argument. See the documentation of the particular methods for details of what is produced by that method.
 }
 \description{
 Remove whitespace from character vectors/columns.

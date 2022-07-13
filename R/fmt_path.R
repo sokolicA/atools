@@ -30,7 +30,7 @@ fmt_path <- function(
     path
   }
   new_path <- gsub("\"", '', old_path)
-  if (fwd_slash) {
+  if (unix) {
     new_path <- chartr("\\", "/", new_path)
   }
   new_path <- gsub("(/)\\1+", "\\1", new_path)

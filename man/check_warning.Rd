@@ -19,6 +19,4 @@ Check if evaluation of expression returns any warnings
 x <- 3
 check_warning(3 * x)
 check_warning(as.numeric("3a"))
-rm(x)
-check_warning(3 * x)
 }

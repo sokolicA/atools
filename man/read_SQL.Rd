@@ -8,6 +8,8 @@ read_sql(path, rm_comments = FALSE)
 }
 \arguments{
 \item{path}{Path to the .sql file. If the sql file includes multiple queries or has other text before and after the query, mark the start of the query with "-- start query" and the end of the query with "-- end query".}
+
+\item{rm_comments}{Whether to remove comments in sql code.}
 }
 \value{
 A string containing the sql code.

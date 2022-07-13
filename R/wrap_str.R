@@ -7,7 +7,7 @@
 #' @export
 #'
 #' @examples
-#' wrap_str("This line is too long to display in one row, hence it will be displayed in multiple rows.", col_len = 10)
+#' wrap_str("This line is supposedly too long to display in one row.", col_len = 10)
 wrap_str <- function(x, col_len = 10) {
   x <- strwrap(x, width = col_len, simplify = FALSE)
   x <- lapply(x, paste, collapse = "\n")

@@ -18,5 +18,5 @@ A character vector.
 Wrap Character Strings to Format Paragraphs
 }
 \examples{
-wrap_str("This line is too long to display in one row, hence it will be displayed in multiple rows.", col_len = 10)
+wrap_str("This line is supposedly too long to display in one row.", col_len = 10)
 }
