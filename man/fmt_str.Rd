@@ -6,8 +6,8 @@
 \usage{
 fmt_str(
   str,
-  u_case,
-  rm_caron = FALSE,
+  ascii = TRUE,
+  u_case = FALSE,
   rm_special = FALSE,
   rm_space = FALSE,
   n_char = NULL
@@ -16,9 +16,9 @@ fmt_str(
 \arguments{
 \item{str}{A character vector}
 
-\item{u_case}{Whether to return upper case letters.}
+\item{ascii}{Whether to transliterate characters to ASCII. This means removal of carons and similiar.}
 
-\item{rm_caron}{Whether to remove carons.}
+\item{u_case}{Whether to return upper case letters.}
 
 \item{rm_special}{Whether to remove special characters.}
 
