@@ -24,7 +24,7 @@ read_sql <- function(path, enc = "unknown", rm_comments = FALSE) {
   sql <- ""
 
   while (TRUE) {
-    line <- readLines(con, n = 1, encoding = enc)
+    line <- readLines(con, n = 1, encoding = enc, warn = FALSE)
 
     if ( length(line) == 0 ){
       break
