@@ -4,10 +4,12 @@
 \alias{read_sql}
 \title{Read a SQL file into a string in R.}
 \usage{
-read_sql(path, rm_comments = FALSE)
+read_sql(path, enc = "unknown", rm_comments = FALSE)
 }
 \arguments{
 \item{path}{Path to the .sql file. If the sql file includes multiple queries or has other text before and after the query, mark the start of the query with "-- start query" and the end of the query with "-- end query".}
+
+\item{enc}{Encoding of the SQL file. Defaults to native - unknown.}
 
 \item{rm_comments}{Whether to remove comments in sql code.}
 }
