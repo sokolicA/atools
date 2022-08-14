@@ -1,10 +1,12 @@
 #' Install custom packages list and / or update existing packages
 #'
+#' @details It is suggested to use the function on a fresh R session with no packages loaded.
+#' An error is returned if other packages are loaded. This may include packages that are included via the .Rprofile file.
+#'
 #' @param update Whether to update installed packages with newer versions. Defaults to FALSE.
 #'
 #' @return Nothing.
 #' @export
-#' @importFrom rstudioapi restartSession
 #' @importFrom utils old.packages
 #'
 #' @examples
@@ -12,6 +14,9 @@
 #' install_packages()
 #' }
 install_packages <- function(update = FALSE) {
+
+  other_pkgs_loaded <- length(utils::sessionInfo()$otherPkgs) > 0
+  if (other_pkgs_loaded) stop("Non base packages loaded. It is suggested to install packages on a fresh R session.")
 
   # List of packages
   packages <- c(
@@ -55,5 +60,5 @@ install_packages <- function(update = FALSE) {
     if(length(old_pkgs)) utils::install.packages(old_pkgs)
   }
 
-  cat("Done!")
+  cat("Done!\n")
 }

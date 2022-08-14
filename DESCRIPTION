@@ -7,7 +7,7 @@ Description: Convenience/utility functions to make some repetitive tasks a bit e
 License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.2.0
+RoxygenNote: 7.2.1
 URL: https://github.com/sokolicA/atools
 BugReports: https://github.com/sokolicA/atools/issues
 Imports: 
