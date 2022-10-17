@@ -15,6 +15,10 @@ Nothing.
 \description{
 Install custom packages list and / or update existing packages
 }
+\details{
+It is suggested to use the function on a fresh R session with no packages loaded.
+An error is returned if other packages are loaded. This may include packages that are included via the .Rprofile file.
+}
 \examples{
 \dontrun{
 install_packages()

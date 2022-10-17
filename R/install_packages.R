@@ -24,6 +24,7 @@ install_packages <- function(update = FALSE) {
     "sessioninfo",
     "here",
     "knitr",
+    "blogdown",
     "markdown",
     "rmarkdown",
     "shiny",

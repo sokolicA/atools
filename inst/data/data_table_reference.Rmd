@@ -1,0 +1,353 @@
+---
+title: "Report"
+author: "Andrej Sokolič"
+output:
+  rmarkdown::html_document:
+    toc: true
+    toc_float: false
+    number_sections: true
+    theme: spacelab
+    fig_caption: true
+    css: "report_style.css"
+  pdf_document: default
+params: 
+  d: !r Sys.Date()
+  eval: TRUE
+  fig_align: center
+  fig_asp: 0.618
+  fig_out_width: 70%
+  fig_pos: asis
+  fig_width: 6
+  locale: slovenian
+  print_code: TRUE
+  print_msgs: FALSE
+  print_txt_results: TRUE
+  print_session_info: TRUE
+  print_warnings : FALSE
+  subtitle: FALSE
+---
+
+
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(
+  echo = params$print_code,
+  eval = params$eval, 
+  fig.align = params$fig_align,
+  fig.asp = params$fig_asp,
+  fig.show = params$fig_pos, 
+  fig.width = params$fig_width,
+  message = params$print_msgs,
+  out.width = params$fig_out_width,
+  results = params$print_txt_results, 
+  warning = params$print_warnings
+)
+
+Sys.setlocale("LC_ALL", params$locale)
+
+report_date <- ifelse(
+  grepl("eng", params$locale, ignore.case = TRUE), 
+  params$d, 
+  format(params$d, format = "%d.%m.%Y")
+)
+
+report_subtitle <- ifelse(
+  params$subtitle != FALSE,
+  params$subtitle,
+  ""
+)
+```
+
+
+```{r libraries, echo = FALSE}
+library(here)
+library(data.table)
+```
+
+`r ifelse(params$print_session_info, "**Session Information:**\n", "")`
+
+```{r sess_info, results='markup'}
+if(params$print_session_info) sessioninfo::session_info()
+```
+
+
+---
+date: `r report_date`
+subtitle: `r report_subtitle`
+---
+
+[Article on medium](https://medium.com/analytics-vidhya/r-data-table-joins-48f00b46ce29)
+
+# Assignment by reference
+
+## The standard way
+
+We create a data.table object and use the standard way to assign it to a new object.
+We can see that the assignment by reference modifies the object that is still referenced by the original variable X. Changes in the new variable Y affect the original object.
+
+```{r}
+X <- data.table(
+  name = c("A", "B", "C", "D"),
+  value = c(1, 2, 3, 4)
+)
+X_ptr <- address(X)
+
+Y <- X
+Y_ptr <- address(Y)
+X_ptr == Y_ptr
+
+Y[name == "C", value := 0]
+Y_ptr_new <- address(Y)
+Y_ptr_new == Y_ptr
+Y_ptr_new == X_ptr
+
+Y[name == "C", value]
+X[name == "C", value]
+```
+
+## Using copy
+
+Using copy creates a new object (new address) and therefore does not change the original object.
+Changes in the new variable Z do not affect the original object.
+
+```{r}
+X <- data.table(
+  name = c("A", "B", "C", "D"),
+  value = c(1, 2, 3, 4)
+)
+X_ptr_copy <- address(X)
+X_ptr_copy == X_ptr
+
+Z <- copy(X)
+Z_ptr <- address(Z)
+
+X_ptr_copy == Z_ptr
+Z[name == "C", value := 0]
+Z_ptr_new <- address(Z)
+Z_ptr_new == Z_ptr
+
+Z[name == "C", value]
+X[name == "C", value]
+```
+
+
+# Using joins
+
+## Left join
+
+```{r}
+X <- data.table(
+  name = c("A", "B", "C", "D"),
+  value = c("x1", "x2", "x3", "x4")
+)
+X_ptr <- address(X)
+
+Y <- data.table(
+  name = c("A", "C", "D", "D", "E"),
+  value = c("y1", "y2", "y3", "y4", "y5")
+)
+Y_ptr <- address(Y)
+```
+
+
+## Full join 
+
+```{r}
+merge.data.table(X, Y, by = "name", all = TRUE)
+```
+
+## Right / Left outer join
+
+All names in Y and matching names in X.
+
+```{r}
+X[Y, on = .(name)]
+X; Y
+# We have to assign the new object to a new variable
+Z1 <- X[Y, on = .(name)]
+Z1
+Z1_ptr <- address(Z1)
+Z1_ptr == X_ptr
+Z1_ptr == Y_ptr
+
+# Using merge.data.table
+merge.data.table(X, Y, by = "name", all.y = TRUE)
+```
+
+All names in X and matching names in Y.
+
+
+```{r}
+Y[X, on = .(name)]
+X; Y
+# We have to assign the new object to a new variable
+Z2 <- X[Y, on = .(name)]
+Z2
+Z2_ptr <- address(Z2)
+Z2_ptr == X_ptr
+Z2_ptr == Y_ptr
+
+# Using merge.data.table
+merge.data.table(X, Y, by = "name", all.x = TRUE) 
+```
+
+### Using mult argument
+
+```{r}
+# Default
+Y[X, on = .(name), mult = "all"]
+# First match
+Y[X, on = .(name), mult = "first"]
+# Last match
+Y[X, on = .(name), mult = "last"]
+```
+
+## Inner join
+
+```{r}
+X[Y, on = .(name), nomatch = NULL]
+merge.data.table(X, Y, by = "name")
+```
+
+## Anti join
+
+Return rows of X that do not have a match in Y.
+
+```{r}
+X; Y
+X[!Y, on = .(name)]
+```
+
+## Semi - join
+
+Return rows of the left table that have a match in the right table. The which parameter returns matching rows with NA for non matching rows.
+
+```{r}
+X[na.omit(X[Y, on = .(name), which=TRUE])]
+
+Y[na.omit(Y[X, on = .(name), which=TRUE])]
+```
+
+
+## Using keys
+
+The join is automatically done on key columns.
+
+```{r}
+atools::check_error(X["A"])
+
+setkey(X, name)
+setkey(Y, name)
+
+X["A"]
+Y["D"]
+X[Y]
+Y[X, mult = "all"]
+Y[X, mult = "first"]
+```
+
+### Full outer join
+
+```{r}
+unique_ids = unique(c(X[, name], Y[, name]))
+X[Y[unique_ids]]
+merge.data.table(X, Y, all = TRUE)
+```
+
+
+## Using non equi joins
+
+```{r}
+fenway <- fread(
+    "Visitor, Start, End
+    Cleveland, 2021-09-03, 2021-09-05
+    Tampa Bay, 2021-09-06, 2021-09-08
+    Baltimore, 2021-09-17, 2021-09-19
+    NY Mets, 2021-09-21, 2021-09-22
+    NY Yankees, 2021-09-24, 2021-09-26")
+
+september <- 
+   data.table(date = seq(as.Date('2021-09-01'), 
+   as.Date('2021-09-30'), 'days'))
+head(september)
+
+home_games <- 
+  fenway[september, on = .(Start <= date, End >= date), 
+  .(Visitor, Date = Start)][!is.na(Visitor)]
+home_games
+
+# Columns from LHS must be on LHS
+atools::check_error(fenway[september, on = .(date >= Start, date <= End), 
+       .(Visitor, Date = Start)][!is.na(Visitor)])
+```
+
+
+### Rolling over
+
+Carries forward the last match until new match.
+
+```{r}
+home_games[september, on = .(Date == date)]
+home_games[september, on = .(Date == date), roll = TRUE]
+
+# Opposite direction
+home_games[september, on = .(Date == date), roll = -Inf]
+```
+
+
+### OVerlapping range join
+
+```{r}
+yankees <- fread(
+  "NYY Opponent, Start, End
+  Anaheim, 2021-09-01, 2021-09-01
+  Baltimore, 2021-09-03, 2021-09-05
+  Toronto, 2021-09-06, 2021-09-09"
+)
+setkey(yankees, Start, End)
+
+fenway; 
+yankees
+foverlaps(fenway, yankees)
+
+```
+
+
+
+## Join by reference
+
+```{r}
+X[Y, on = .(name), Y_value := i.value]
+X;Y
+X_ptr == address(X)
+
+# Here mult does nothing
+X[Y, on = .(name), Y_value := i.value, mult = "first"]
+X
+X[Y, on = .(name), Y_value := i.value, mult = "last"]
+X
+```
+
+
+```{r}
+X; Y
+Y[X, on = .(name), X_value := i.value]
+X;Y
+Y_ptr == address(Y)
+```
+
+
+### Warning
+
+Notice below how the standard way of assigning variables still works on the original objects.
+
+```{r}
+X2 <- X
+X2
+X2[Y, on = .(name), Y_value2 := i.value]
+X; X2
+```
+
+
+
+
