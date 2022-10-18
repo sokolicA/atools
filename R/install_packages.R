@@ -27,6 +27,7 @@ install_packages <- function(update = FALSE) {
     "blogdown",
     "markdown",
     "rmarkdown",
+    "prettydoc",
     "shiny",
     "htmltools",
     "data.table",
@@ -45,6 +46,8 @@ install_packages <- function(update = FALSE) {
     "highcharter",
     "ggh4x",
     "rayshader",
+    "flextable",
+    "webshot",
     "gt",
     "gtsummary",
     "ISLR"
