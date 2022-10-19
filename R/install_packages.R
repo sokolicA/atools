@@ -25,6 +25,7 @@ install_packages <- function(update = FALSE) {
     "here",
     "knitr",
     "blogdown",
+    "flexdashboard",
     "markdown",
     "rmarkdown",
     "prettydoc",
