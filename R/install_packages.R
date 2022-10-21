@@ -46,12 +46,16 @@ install_packages <- function(update = FALSE) {
     "plotly",
     "highcharter",
     "ggh4x",
+    "ggrepel",
     "rayshader",
     "flextable",
     "webshot",
     "gt",
     "gtsummary",
-    "ISLR"
+    "ISLR",
+    "readxl",
+    "writexl",
+    "jsonlite"
   )
   # Missing packages
   missing_pkgs <- setdiff(packages, rownames(utils::installed.packages()))
