@@ -13,7 +13,6 @@
 #'
 #' @return A string containing the new path.
 #' @export
-#' @importFrom utils readClipboard
 #'
 #' @references [Wikipedia Path (computing)](https://en.wikipedia.org/wiki/Path_(computing))
 #'
@@ -25,7 +24,13 @@ fmt_path <- function(
     unix = FALSE,
     write = TRUE) {
   old_path <- if (path == "clipboard") {
-    readClipboard()
+    tryCatch(
+      readLines(con = "clipboard", warn = FALSE),
+      error = function(cond) {
+        message(paste("Clipboard is probably empty!"))
+        message(cond)
+      }
+    )
   } else {
     path
   }
